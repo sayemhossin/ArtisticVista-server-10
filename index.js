@@ -57,10 +57,39 @@ app.get('/crafts/:id', async(req,res) => {
     res.send(result)
 })
 app.get("/myProduct/:email", async (req, res) => {
-  console.log(req.params.email);
   const result = await craftCollection.find({ email: req.params.email }).toArray();
   res.send(result)
 })
+
+
+app.put('/crafts/:id', async(req,res)=>{
+  const id = req.params.id
+  const crafts = req.body
+  const filter = {_id: new ObjectId(id)}
+  const options = {upsert:true}
+  const updateCrafts = {
+    $set:{
+      item:crafts.item,
+      subcategory:crafts.subcategory,
+      price:crafts.price,
+      rating:crafts.rating,
+      photo:crafts.photo,
+      customization:crafts.customization,
+      processing:crafts.processing,
+      stock:crafts.stock,
+      description:crafts.description
+    }
+  }
+  const result = await craftCollection.updateOne(filter,updateCrafts,options)
+res.send(result)
+})
+
+
+
+
+
+
+
 
 app.delete('/crafts/:id', async(req,res)=>{
   const id = req.params.id
