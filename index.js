@@ -35,6 +35,7 @@ async function run() {
 
   const database = client.db("ArtisticVista")
   const craftCollection = database.collection("craft")
+  const artCraftCollection = database.collection("artcraft")
 
 
 
@@ -56,6 +57,7 @@ app.get('/crafts/:id', async(req,res) => {
     const result =  await craftCollection.findOne(query)
     res.send(result)
 })
+
 app.get("/myProduct/:email", async (req, res) => {
   const result = await craftCollection.find({ email: req.params.email }).toArray();
   res.send(result)
@@ -85,12 +87,6 @@ res.send(result)
 })
 
 
-
-
-
-
-
-
 app.delete('/crafts/:id', async(req,res)=>{
   const id = req.params.id
   const query = {_id: new ObjectId(id)}
@@ -98,6 +94,21 @@ app.delete('/crafts/:id', async(req,res)=>{
   res.send(result)
 })
 
+
+// --------art craft -------------
+
+app.get('/artcraft', async(req,res)=>{
+  const cursor = artCraftCollection.find()
+  const result = await cursor.toArray()
+  res.send(result)
+})
+
+app.get('/artcraft/:id', async(req,res) => {
+  const id = req.params.id
+  const query = {_id: new ObjectId(id)}
+  const result =  await artCraftCollection.findOne(query)
+  res.send(result)
+})
 
 
 
