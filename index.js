@@ -31,7 +31,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
   const database = client.db("ArtisticVista")
   const craftCollection = database.collection("craft")
@@ -62,6 +62,21 @@ app.get("/myProduct/:email", async (req, res) => {
   const result = await craftCollection.find({ email: req.params.email }).toArray();
   res.send(result)
 })
+// =================
+
+
+
+app.get("/craftss/:item", async (req, res) => {
+  const result = await craftCollection.find({ item: req.params.item }).toArray();
+  res.send(result)
+})
+
+
+
+
+
+
+
 
 
 app.put('/crafts/:id', async(req,res)=>{
